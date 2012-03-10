@@ -1,0 +1,49 @@
+#!/bin/bash
+
+if [ "$#" -eq 2 ]; then
+    a=$2
+else
+    a=$1
+fi
+
+base_dir=/Users/Phillip/Documents/Research/Resources/Notes/terminal_notes
+fs=(`ls $base_dir | grep -v '.*~' | grep -v '^#.*' | grep '^'$a'.*'`)
+
+if [ ${#fs[@]} -gt 1 ]; then
+    #echo ${fs[@]}
+    printf "\n"
+    printf "%s\n" "${fs[@]}"
+    printf "\n"
+    exit
+fi
+
+f=${fs[0]}
+
+
+
+while getopts ":ecws" opt; do
+  case $opt in
+    e)
+      emacs $base_dir/$f
+      exit
+      ;;
+    c)
+      emacs $base_dir/$a
+      exit
+      ;;
+    w)
+      echo ${fs[*]}
+      exit
+      ;;
+    s)
+      grep -v '^[[:space:]]*#' $base_dir/$f | say
+      exit
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit
+      ;;
+  esac
+done
+
+less $base_dir/$f
