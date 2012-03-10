@@ -9,6 +9,7 @@ fi
 base_dir=/Users/Phillip/Documents/Research/Resources/Notes/terminal_notes
 fs=(`ls $base_dir | grep -v '.*~' | grep -v '^#.*' | grep '^'$a'.*'`)
 
+# print options if more than one partial match
 if [ ${#fs[@]} -gt 1 ]; then
     #echo ${fs[@]}
     printf "\n"
@@ -50,4 +51,5 @@ while getopts ":ecwsh" opt; do
   esac
 done
 
+# if no option specified, just print out the note
 less $base_dir/$f
